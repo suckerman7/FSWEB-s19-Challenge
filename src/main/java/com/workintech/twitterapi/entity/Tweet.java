@@ -11,6 +11,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "tweets", schema = "fsweb")
 @Data
 @Builder
 @NoArgsConstructor
