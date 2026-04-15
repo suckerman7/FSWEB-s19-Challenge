@@ -1,19 +1,20 @@
 package com.workintech.twitterapi.service;
 
 import com.workintech.twitterapi.dto.CreateTweetDTO;
-import com.workintech.twitterapi.entity.Tweet;
+import com.workintech.twitterapi.dto.TweetResponseDTO;
+import com.workintech.twitterapi.dto.UpdateTweetDTO;
 
 import java.util.List;
 
 public interface TweetService {
 
-    Tweet createTweet(CreateTweetDTO dto);
+    TweetResponseDTO createTweet(CreateTweetDTO dto);
 
-    List<Tweet> findByUserId(Long userId);
+    List<TweetResponseDTO> findByUserId(Long userId);
 
-    Tweet findById(Long id);
+    TweetResponseDTO findById(Long id);
 
-    Tweet updateTweet(Long id, String content, Long userId);
+    TweetResponseDTO updateTweet(Long id, UpdateTweetDTO dto);
 
-    void deleteTweet(Long id, Long userId);
+    void deleteTweet(Long id);
 }
