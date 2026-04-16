@@ -1,7 +1,7 @@
 package com.workintech.twitterapi.service;
 
-import com.workintech.twitterapi.dto.CommentResponseDTO;
-import com.workintech.twitterapi.dto.CreateCommentDTO;
+import com.workintech.twitterapi.dto.response.CommentResponseDTO;
+import com.workintech.twitterapi.dto.create.CreateCommentDTO;
 import com.workintech.twitterapi.entity.Comment;
 import com.workintech.twitterapi.entity.Tweet;
 import com.workintech.twitterapi.entity.User;

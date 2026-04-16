@@ -1,7 +1,7 @@
 package com.workintech.twitterapi.controller;
 
-import com.workintech.twitterapi.dto.LoginRequestDTO;
-import com.workintech.twitterapi.dto.RegisterRequestDTO;
+import com.workintech.twitterapi.dto.request.LoginRequestDTO;
+import com.workintech.twitterapi.dto.request.RegisterRequestDTO;
 import com.workintech.twitterapi.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,18 +1,18 @@
-package com.workintech.twitterapi.dto;
+package com.workintech.twitterapi.dto.create;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CreateTweetDTO {
+public class CreateCommentDTO {
 
     @NotBlank
-    @Size(min = 1, max = 280)
     private String content;
 
     @NotNull
     private Long userId;
 
+    @NotNull
+    private Long tweetId;
 }

@@ -1,4 +1,4 @@
-package com.workintech.twitterapi.dto;
+package com.workintech.twitterapi.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

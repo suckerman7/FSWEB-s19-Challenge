@@ -1,8 +1,8 @@
 package com.workintech.twitterapi.service;
 
-import com.workintech.twitterapi.dto.CreateTweetDTO;
-import com.workintech.twitterapi.dto.TweetResponseDTO;
-import com.workintech.twitterapi.dto.UpdateTweetDTO;
+import com.workintech.twitterapi.dto.create.CreateTweetDTO;
+import com.workintech.twitterapi.dto.response.TweetResponseDTO;
+import com.workintech.twitterapi.dto.create.UpdateTweetDTO;
 import com.workintech.twitterapi.entity.Tweet;
 import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.exception.notfound.TweetNotFoundException;

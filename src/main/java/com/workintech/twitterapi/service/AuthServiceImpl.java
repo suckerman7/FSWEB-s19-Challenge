@@ -1,7 +1,7 @@
 package com.workintech.twitterapi.service;
 
-import com.workintech.twitterapi.dto.LoginRequestDTO;
-import com.workintech.twitterapi.dto.RegisterRequestDTO;
+import com.workintech.twitterapi.dto.request.LoginRequestDTO;
+import com.workintech.twitterapi.dto.request.RegisterRequestDTO;
 import com.workintech.twitterapi.entity.Role;
 import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.exception.badrequest.BadRequestException;

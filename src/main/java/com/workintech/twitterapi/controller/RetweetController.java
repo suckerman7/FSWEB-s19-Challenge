@@ -1,7 +1,6 @@
 package com.workintech.twitterapi.controller;
 
-import com.workintech.twitterapi.dto.RetweetRequestDTO;
-import com.workintech.twitterapi.entity.Retweet;
+import com.workintech.twitterapi.dto.request.RetweetRequestDTO;
 import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.service.RetweetService;
 import lombok.RequiredArgsConstructor;

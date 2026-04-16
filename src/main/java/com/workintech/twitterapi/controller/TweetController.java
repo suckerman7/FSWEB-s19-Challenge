@@ -1,9 +1,8 @@
 package com.workintech.twitterapi.controller;
 
-import com.workintech.twitterapi.dto.CreateTweetDTO;
-import com.workintech.twitterapi.dto.TweetResponseDTO;
-import com.workintech.twitterapi.dto.UpdateTweetDTO;
-import com.workintech.twitterapi.entity.Tweet;
+import com.workintech.twitterapi.dto.create.CreateTweetDTO;
+import com.workintech.twitterapi.dto.response.TweetResponseDTO;
+import com.workintech.twitterapi.dto.create.UpdateTweetDTO;
 import com.workintech.twitterapi.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

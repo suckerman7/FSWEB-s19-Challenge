@@ -1,6 +1,6 @@
 package com.workintech.twitterapi.controller;
 
-import com.workintech.twitterapi.dto.LikeRequestDTO;
+import com.workintech.twitterapi.dto.request.LikeRequestDTO;
 import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.service.LikeService;
 import lombok.RequiredArgsConstructor;

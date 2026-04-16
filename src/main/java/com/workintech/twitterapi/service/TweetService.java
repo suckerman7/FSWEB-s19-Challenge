@@ -1,8 +1,8 @@
 package com.workintech.twitterapi.service;
 
-import com.workintech.twitterapi.dto.CreateTweetDTO;
-import com.workintech.twitterapi.dto.TweetResponseDTO;
-import com.workintech.twitterapi.dto.UpdateTweetDTO;
+import com.workintech.twitterapi.dto.create.CreateTweetDTO;
+import com.workintech.twitterapi.dto.response.TweetResponseDTO;
+import com.workintech.twitterapi.dto.create.UpdateTweetDTO;
 
 import java.util.List;
 
