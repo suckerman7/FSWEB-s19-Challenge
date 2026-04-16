@@ -62,28 +62,4 @@ public class LikeServiceImpl implements LikeService {
 
         likeRepository.delete(like);
     }
-
-    @Override
-    public void toggleLike(Long userId, Long tweetId) {
-
-        Optional<Like> optionalLike = likeRepository.findByUserIdAndTweetId(userId, tweetId);
-
-        if(optionalLike.isPresent()) {
-            likeRepository.delete(optionalLike.get());
-            return;
-        }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Kullanıcı bulunamadı! id: " + userId));
-
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new TweetNotFoundException("Tweet bulunamadı! id: " + tweetId));
-
-        Like like = Like.builder()
-                .user(user)
-                .tweet(tweet)
-                .build();
-
-        likeRepository.save(like);
-    }
 }

@@ -39,8 +39,9 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.USER;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

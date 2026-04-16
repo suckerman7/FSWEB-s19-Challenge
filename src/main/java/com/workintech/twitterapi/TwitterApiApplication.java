@@ -10,11 +10,6 @@ public class TwitterApiApplication {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext context = SpringApplication.run(TwitterApiApplication.class, args);
-
-        for(String beanName : context.getBeanDefinitionNames()) {
-
-            System.out.println(beanName);
-        }
     }
 
 

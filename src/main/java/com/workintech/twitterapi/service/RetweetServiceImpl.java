@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 public class RetweetServiceImpl implements RetweetService {
 
     private final RetweetRepository retweetRepository;
-    private final UserRepository userRepository;
     private final TweetRepository tweetRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public Retweet createRetweet(Long userId, Long tweetId) {
+    public void retweet(Long userId, Long tweetId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Kullanıcı bulunamadı! id: " + userId));
@@ -31,12 +31,10 @@ public class RetweetServiceImpl implements RetweetService {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new TweetNotFoundException("Tweet bulunamadı! id: " + tweetId));
 
-        boolean alreadyRetweeted = retweetRepository
-                .findByUserIdAndTweetId(userId, tweetId)
-                .isPresent();
+        boolean exists = retweetRepository.existsByUserIdAndTweetId(userId, tweetId);
 
-        if(alreadyRetweeted) {
-            throw new BadRequestException("Bu tweet zaten retweet edilmiş.");
+        if (exists) {
+            throw new BadRequestException("Zaten retweet edilmiş!");
         }
 
         Retweet retweet = Retweet.builder()
@@ -44,17 +42,17 @@ public class RetweetServiceImpl implements RetweetService {
                 .tweet(tweet)
                 .build();
 
-        return retweetRepository.save(retweet);
+        retweetRepository.save(retweet);
     }
 
     @Override
-    public void deleteRetweet(Long userId, Long tweetId) {
+    public void deleteRetweet(Long retweetId, Long userId) {
 
-        Retweet retweet = retweetRepository.findByUserIdAndTweetId(userId, tweetId)
-                .orElseThrow(() -> new RetweetNotFoundException("Retweet bulunamadı!"));
+        Retweet retweet = retweetRepository.findById(retweetId)
+                .orElseThrow(() -> new RuntimeException("Retweet bulunamadı! id: " + retweetId));
 
-        if(!retweet.getUser().getId().equals(userId)) {
-            throw new UnauthorizedException("Bu retweet'i silme yetkiniz yok.");
+        if (!retweet.getUser().getId().equals(userId)) {
+            throw new UnauthorizedException("Bu retweet'i silemezsin");
         }
 
         retweetRepository.delete(retweet);

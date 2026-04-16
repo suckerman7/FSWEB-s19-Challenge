@@ -1,5 +1,6 @@
 package com.workintech.twitterapi.controller;
 
+import com.workintech.twitterapi.dto.CommentResponseDTO;
 import com.workintech.twitterapi.dto.CreateCommentDTO;
 import com.workintech.twitterapi.entity.Comment;
 import com.workintech.twitterapi.service.CommentService;
@@ -14,25 +15,28 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommentController {
 
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Comment> create(@RequestBody CreateCommentDTO dto) {
+    public ResponseEntity<CommentResponseDTO> create(@RequestBody CreateCommentDTO dto) {
         return ResponseEntity.ok(commentService.createComment(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> update(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<CommentResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
 
         return ResponseEntity.ok(commentService.updateComment(
-                id, body.get("content"), Long.parseLong(body.get("userId"))
+                id,
+                body.get("content")
         ));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestParam Long userId) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-        commentService.deleteComment(id, userId);
+        commentService.deleteComment(id);
 
         return ResponseEntity.ok().build();
     }

@@ -18,11 +18,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterRequestDTO request) {
-
+    public ResponseEntity<String> register(@RequestBody RegisterRequestDTO request) {
         authService.register(request);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Kullanıcı başarıyla oluşturuldu");
     }
 
     @PostMapping("/login")

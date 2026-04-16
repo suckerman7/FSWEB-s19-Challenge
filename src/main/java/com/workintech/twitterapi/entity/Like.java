@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "likes", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"}))
+@Table(name = "likes", schema = "fsweb", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"}))
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,9 +18,11 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 }

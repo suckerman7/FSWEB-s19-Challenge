@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "retweets", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"}))
+@Table(name = "retweets", schema = "fsweb", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"}))
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,10 +18,12 @@ public class Retweet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 
     @CreationTimestamp

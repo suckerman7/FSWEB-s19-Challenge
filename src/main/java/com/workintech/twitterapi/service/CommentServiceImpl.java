@@ -1,5 +1,6 @@
 package com.workintech.twitterapi.service;
 
+import com.workintech.twitterapi.dto.CommentResponseDTO;
 import com.workintech.twitterapi.dto.CreateCommentDTO;
 import com.workintech.twitterapi.entity.Comment;
 import com.workintech.twitterapi.entity.Tweet;
@@ -12,7 +13,7 @@ import com.workintech.twitterapi.repository.CommentRepository;
 import com.workintech.twitterapi.repository.TweetRepository;
 import com.workintech.twitterapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
 
     @Override
-    public Comment createComment(CreateCommentDTO dto) {
+    public CommentResponseDTO createComment(CreateCommentDTO dto) {
 
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Kullanıcı bulunamadı! Id: " + dto.getUserId()));
@@ -38,32 +39,59 @@ public class CommentServiceImpl implements CommentService {
                 .tweet(tweet)
                 .build();
 
-        return commentRepository.save(comment);
+        Comment saved = commentRepository.save(comment);
+
+        return CommentResponseDTO.builder()
+                .id(saved.getId())
+                .content(saved.getContent())
+                .userId(saved.getUser().getId())
+                .tweetId(saved.getTweet().getId())
+                .createdAt(saved.getCreatedAt())
+                .build();
     }
 
     @Override
-    public Comment updateComment(Long commentId, String content, Long userId) {
+    public CommentResponseDTO updateComment(Long commentId, String content) {
+
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
         Comment comment = getCommentOrThrow(commentId);
 
-        if(!comment.getUser().getId().equals(userId)) {
+        if (!comment.getUser().getId().equals(user.getId())) {
             throw new UnauthorizedException("Bu yorumu güncelleme yetkiniz yok.");
         }
 
         comment.setContent(content);
 
-        return commentRepository.save(comment);
+        Comment updated = commentRepository.save(comment);
+
+        return CommentResponseDTO.builder()
+                .id(updated.getId())
+                .content(updated.getContent())
+                .userId(updated.getUser().getId())
+                .tweetId(updated.getTweet().getId())
+                .createdAt(updated.getCreatedAt())
+                .build();
     }
 
     @Override
-    public void deleteComment(Long commentId, Long userId) {
+    public void deleteComment(Long commentId) {
+
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
         Comment comment = getCommentOrThrow(commentId);
 
         Long commentOwnerId = comment.getUser().getId();
         Long tweetOwnerId = comment.getTweet().getUser().getId();
 
-        if(!commentOwnerId.equals(userId) && !tweetOwnerId.equals(userId)) {
+        if (!commentOwnerId.equals(user.getId()) &&
+                !tweetOwnerId.equals(user.getId())) {
             throw new UnauthorizedException("Bu yorumu silme yetkiniz yok.");
         }
 

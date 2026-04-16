@@ -1,12 +1,12 @@
 package com.workintech.twitterapi.controller;
 
+import com.workintech.twitterapi.dto.LikeRequestDTO;
+import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
@@ -16,17 +16,29 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping("/like")
-    public ResponseEntity<Void> like(@RequestParam Long userId, @RequestParam Long tweetId) {
+    public ResponseEntity<Void> like(@RequestBody LikeRequestDTO dto) {
 
-        likeService.likeTweet(userId, tweetId);
+        Long userId = ((User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getId();
+
+        likeService.likeTweet(userId, dto.getTweetId());
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/dislike")
-    public ResponseEntity<Void> dislike(@RequestParam Long userId, @RequestParam Long tweetId) {
+    public ResponseEntity<Void> dislike(@RequestBody LikeRequestDTO dto) {
 
-        likeService.dislikeTweet(userId, tweetId);
+        Long userId = ((User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getId();
+
+        likeService.dislikeTweet(userId, dto.getTweetId());
 
         return ResponseEntity.ok().build();
     }

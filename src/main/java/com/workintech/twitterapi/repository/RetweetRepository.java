@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface RetweetRepository extends JpaRepository<Retweet, Long> {
 
     Optional<Retweet> findByUserIdAndTweetId(Long userId, Long tweetId);
+
+    boolean existsByUserIdAndTweetId(Long userId, Long tweetId);
 }
