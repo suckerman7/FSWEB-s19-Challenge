@@ -5,6 +5,8 @@ export default function TweetList() {
     const [tweets, setTweets] = useState([]);
     const [error, setError] = useState("");
 
+        console.log(localStorage.getItem("token"));
+
     useEffect(() => {
         const fetchTweets = async () => {
             try {

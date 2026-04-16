@@ -1,13 +1,21 @@
-import TweetList from './components/tweetList'
+import { useState } from "react";
+import Login from "./components/Login";
+import TweetList from "./components/TweetList";
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        !!localStorage.getItem("token")
+    );
 
-  return (
-    <div>
-      <h1>TwitterAPI Frontend App</h1>
-      <TweetList />
-    </div>
-  );
+    return (
+        <>
+            {isLoggedIn ? (
+                <TweetList />
+            ) : (
+                <Login onLogin={() => setIsLoggedIn(true)} />
+            )}
+        </>
+    );
 }
 
 export default App;

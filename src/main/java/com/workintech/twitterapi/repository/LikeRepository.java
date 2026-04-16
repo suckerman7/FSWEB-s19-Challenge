@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     Optional<Like> findByUserIdAndTweetId(Long userId, Long tweetId);
+
+    void deleteAllByTweetId(Long tweetId);
 }

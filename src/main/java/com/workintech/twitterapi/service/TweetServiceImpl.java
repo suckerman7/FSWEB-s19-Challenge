@@ -7,6 +7,9 @@ import com.workintech.twitterapi.entity.Tweet;
 import com.workintech.twitterapi.entity.User;
 import com.workintech.twitterapi.exception.notfound.TweetNotFoundException;
 import com.workintech.twitterapi.exception.unauthorized.TweetUnauthorizedException;
+import com.workintech.twitterapi.repository.CommentRepository;
+import com.workintech.twitterapi.repository.LikeRepository;
+import com.workintech.twitterapi.repository.RetweetRepository;
 import com.workintech.twitterapi.repository.TweetRepository;
 import com.workintech.twitterapi.util.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,9 @@ import java.util.List;
 public class TweetServiceImpl implements TweetService {
 
     private final TweetRepository tweetRepository;
+    private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
+    private final RetweetRepository retweetRepository;
     private final TweetMapper tweetMapper;
 
     @Override
@@ -86,6 +92,10 @@ public class TweetServiceImpl implements TweetService {
         if(!tweet.getUser().getId().equals(user.getId())) {
             throw new TweetUnauthorizedException("Bu tweet'i silme yetkiniz yok.");
         }
+
+        commentRepository.deleteAllByTweetId(id);
+        likeRepository.deleteAllByTweetId(id);
+        retweetRepository.deleteAllByTweetId(id);
 
         tweetRepository.delete(tweet);
     }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tweets", schema = "fsweb")
@@ -33,5 +34,11 @@ public class Tweet {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
 
 }

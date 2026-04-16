@@ -1,7 +1,7 @@
 export const getTweetsByUserId = async (userId, token) => {
 
     const res = await fetch(
-        `http://localhost:3000/tweet/findByUserId?user_id=${userId}`,
+        `http://localhost:3000/tweet/findByUserId?userId=${userId}`,
         {
             method: "GET",
             headers: {
